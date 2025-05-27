@@ -1,6 +1,11 @@
 # Tensorrt_llm build for x86_64 with attempted cross compile for SM 86 and SM 87
 This branch will talk about the cross compile build that was tried for an x86_64 workstation (A6000 GPUs) and the Nvidia Jetson orin AGX.
 
+# Docker image
+```
+uyiosaamadasun/tensorrt_llm_x86_64_sm86:latest
+```
+
 Find out what GPU architectures your tensorrt-llm build supports in the Docker container
 ```
 cuobjdump --list-elf /app/tensorrt_llm/lib/libnvinfer_plugin_tensorrt_llm.so \
@@ -30,6 +35,20 @@ trtllm-build \
   --weight_streaming \
   --max_batch_size 1 --max_seq_len 512 --max_num_tokens 512 \
   --gpt_attention_plugin disable --fast_build
+```
+
+Fastapi-server
+```
+python examples/apps/fastapi_server.py tinyllama_engine_int4wo   --tokenizer TinyLlama/TinyLlama-1.1B-Chat-v1.0   --port 8000   --max_beam_width 1   --tp_size 1   --pp_size 1   --cp_size 1   --kv_cache_free_gpu_memory_fraction 0.8
+________________________________________________________________________________
+
+jsb@ubuntu:~/TensorRT-LLM$ curl -X POST http://192.168.30.5:8000/generate \                                      
+     -H 'Content-Type: application/json' \
+     -d '{                                                                      "prompt": "### Human: Explain KV-cache in 2 lines\n### Assistant:",                     
+           "max_tokens": 1000,
+           "temperature": 0.2,
+           "streaming": false
+         }'
 ```
 
 Using openai API or curl
