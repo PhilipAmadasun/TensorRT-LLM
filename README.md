@@ -55,6 +55,9 @@ curl http://192.168.30.5:8000/v1/chat/completions \
 
 ## Important parameters/flags for trtllm-build
 Some parameters cannot be enabled at the same time for  a build as they would cause conflicts that lead to things like only partially innitiatlized attention parameter blocks.
+```
+trtllm-build   --checkpoint_dir trt_llm/llama3.2_1B_int4wo_trtllm   --output_dir     trt_llm/llama3.2_1B_int4wo_engine_paged   --max_batch_size 1   --max_seq_len    6000   --fast_build 
+```
 
 ```
 
