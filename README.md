@@ -1,10 +1,13 @@
 # Tensorrt_llm build for x86_64 with attempted cross compile for SM 86 and SM 87
 This branch will talk about the cross compile build that was tried for an x86_64 workstation (A6000 GPUs) and the Nvidia Jetson orin AGX.
+
+Find out what GPU architectures your tensorrt-llm build supports in the Docker container
 ```
 cuobjdump --list-elf /app/tensorrt_llm/lib/libnvinfer_plugin_tensorrt_llm.so \
   | grep -o "sm_[0-9]\+" | sort -u
 ```
 
+Download your target model from huggingface
 ```
 huggingface-cli download <huggingface repo>         --local-dir /data/models/tinyllama-gptq --local-dir-use-symlinks False
 ```
