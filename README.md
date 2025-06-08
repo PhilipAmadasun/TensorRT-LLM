@@ -1,6 +1,20 @@
 # Tensorrt_llm build for x86_64 with attempted cross compile for SM 86 and SM 87
 This branch will talk about the cross compile build that was tried for an x86_64 workstation (A6000 GPUs) and the Nvidia Jetson orin AGX.
 
+How to build
+```
+# TensorRT-LLM uses git-lfs, which needs to be installed in advance.
+apt-get update && apt-get -y install git git-lfs
+git lfs install
+
+git clone https://github.com/NVIDIA/TensorRT-LLM.git
+cd TensorRT-LLM
+git submodule update --init --recursive
+git lfs pull
+
+make -C docker release_build CUDA_ARCHS="'87-real;86-real'"
+
+```
 # Docker image
 ```
 uyiosaamadasun/tensorrt_llm_x86_64_sm86:latest
