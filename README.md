@@ -4,6 +4,9 @@
 
 This branch documents a cross-arch build that targets both a workstation (x86\_64 + A6000, **SM86**) and NVIDIA Jetson Orin AGX (**SM87**), plus how to serve and **profile** it end-to-end.
 
+**NOTE:** The original intent was to cross-compile for NVIDIA edge targets (e.g., Jetson Orin, `sm_87`): convert checkpoints to the TensorRT-LLM layout on a workstation, `scp` them to the device, and then build the final `.engine` on-device for `sm_87`. In practice this workflow is not viable today. The public `sm_87` backend in TensorRT-LLM lacks complete operator/kernel coverage for several newer LLM architectures and features, so engine build/serialization on Orin fails for those models. Until `sm_87` support is broadened, either (a) use model/configs known to be supported on Orin, (b) disable unsupported plugins/features, or (c) target `sm_86` GPUs for deployment.
+
+
 ---
 
 ## 0) Prerequisites
